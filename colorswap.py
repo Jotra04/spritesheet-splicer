@@ -1,9 +1,9 @@
 from PIL import Image
 from itertools import product
 import sys
+import os
 
 def main(img_path, palette_path, overlays, outFile):
-    print(overlays)
     img = Image.open(img_path)
     w, h = img.size
     pixel_map = img.load()
@@ -22,4 +22,6 @@ def main(img_path, palette_path, overlays, outFile):
     img.save(outFile)
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2], sys.argv[3:-1], sys.argv[-1])
+    palettes = os.listdir(sys.argv[2])
+    for pal in palettes:
+        main(sys.argv[1], os.path.join(sys.argv[2], pal), sys.argv[3:-1], f'{sys.argv[-1]}_{pal}.png')
